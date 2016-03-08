@@ -26,3 +26,7 @@
 *.exe
 *.out
 *.app
+
+# Python products
+**/__init__.py
+**/*.pyc
