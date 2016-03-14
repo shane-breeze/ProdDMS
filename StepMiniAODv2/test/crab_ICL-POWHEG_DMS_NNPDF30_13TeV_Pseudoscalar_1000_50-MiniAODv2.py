@@ -8,7 +8,7 @@ config.General.transferLogs    = True
 
 config.JobType.pluginName = 'ANALYSIS'
 config.JobType.psetName   = 'MiniAODv2_cfg.py'
-config.JobType.outputFiles = ['MiniAODv2.root',]
+config.JobType.outputFiles = ['MiniAODv2.root']
 
 config.Data.inputDataset         = '/NNPDF30_13TeV_Pseudoscalar_1000_50/pela-ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50_v1-2015_25ns_Startup_PoissonOOTPU-AODSIM-32cf84fa9bd0ae56d665f49ca6a4ade6/USER'
 config.Data.inputDBS             = 'phys03'
