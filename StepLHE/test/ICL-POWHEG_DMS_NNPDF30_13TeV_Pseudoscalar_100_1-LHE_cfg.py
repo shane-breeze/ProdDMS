@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1_cfg.py --fileout file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1-LHE.root --mc --eventcontent LHE --datatier LHE --conditions MCRUN2_71_V1::All --step LHE --python_filename ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1-LHE_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 10000
+# with command line options: Configuration/GenProduction/python/IC-RunIIWinter15wmLHE-02602-fragment.py --fileout file:IC-RunIIWinter15wmLHE-02602.root --mc --eventcontent LHE --datatier LHE --conditions MCRUN2_71_V1::All --step LHE --python_filename IC-RunIIWinter15wmLHE-02602_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('LHE')
@@ -19,7 +19,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10000)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
@@ -32,7 +32,7 @@ process.options = cms.untracked.PSet(
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $'),
-    annotation = cms.untracked.string('Configuration/GenProduction/python/ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1_cfg.py nevts:10000'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/IC-RunIIWinter15wmLHE-02602-fragment.py nevts:100'),
     name = cms.untracked.string('Applications')
 )
 
@@ -42,7 +42,7 @@ process.LHEoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
     outputCommands = process.LHEEventContent.outputCommands,
-    fileName = cms.untracked.string('file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1-LHE.root'),
+    fileName = cms.untracked.string('file:IC-RunIIWinter15wmLHE-02602.root'),
     dataset = cms.untracked.PSet(
         filterName = cms.untracked.string(''),
         dataTier = cms.untracked.string('LHE')
@@ -56,11 +56,11 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_71_V1::All', '')
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    nEvents = cms.untracked.uint32(10000),
+    nEvents = cms.untracked.uint32(100),
     outputFile = cms.string('cmsgrid_final.lhe'),
     scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh'),
     numberOfParameters = cms.uint32(1),
-    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/powheg/V2/Dark_Matter/DMS_NNPDF30_13TeV_Pseudoscalar/v3/POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_20_1_tarball.tar.gz')
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc481/13TeV/powheg/V2/Dark_Matter/DMS_NNPDF30_13TeV_Pseudoscalar/v3/POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_100_1_tarball.tar.gz')
 )
 
 

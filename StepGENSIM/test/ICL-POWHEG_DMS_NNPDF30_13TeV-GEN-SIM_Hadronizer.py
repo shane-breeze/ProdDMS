@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/ThirteenTeV/ICL-PYTHIA8_DMS_13TeV_Pseudoscalar_1000_50-Hadronizer_TunCUETP8M1_cff.py --filein file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE_cfg.py --fileout file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-GEN-SIM.root --mc --eventcontent RAWSIM --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --inputCommands keep *,drop LHEXMLStringProduct_*_*_* --conditions MCRUN2_71_V1::All --beamspot NominalCollision2015 --step GEN,SIM --magField 38T_PostLS1 --python_filename ICL-POWHEG_DMS_NNPDF30_13TeV-GEN-SIM_Hadronizer.py --no_exec -n 500
+# with command line options: Configuration/GenProduction/python/ThirteenTeV/IC-Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py --filein file:IC-RunIIWinter15wmLHE-02602.root --fileout file:IC-RunIISummer15GS-06337.root --mc --eventcontent RAWSIM --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions MCRUN2_71_V1::All --beamspot Realistic50ns13TeVCollision --step GEN,SIM --magField 38T_PostLS1 --python_filename IC-RunIISummer15GS-06337_1_cfg.py --no_exec -n 84
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('SIM')
@@ -17,22 +17,21 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.Geometry.GeometrySimDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_38T_PostLS1_cff')
 process.load('Configuration.StandardSequences.Generator_cff')
-process.load('IOMC.EventVertexGenerators.VtxSmearedNominalCollision2015_cfi')
+process.load('IOMC.EventVertexGenerators.VtxSmearedRealistic50ns13TeVCollision_cfi')
 process.load('GeneratorInterface.Core.genFilterSummary_cff')
 process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(500)
+    input = cms.untracked.int32(84)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
-    fileNames = cms.untracked.vstring('file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE_cfg.py'),
+    fileNames = cms.untracked.vstring('file:IC-RunIIWinter15wmLHE-02602.root'),
     inputCommands = cms.untracked.vstring('keep *', 
-        'drop LHEXMLStringProduct_*_*_*', 
         'drop LHEXMLStringProduct_*_*_*'),
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False)
 )
@@ -44,7 +43,7 @@ process.options = cms.untracked.PSet(
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $'),
-    annotation = cms.untracked.string('Configuration/GenProduction/python/ThirteenTeV/ICL-PYTHIA8_DMS_13TeV_Pseudoscalar_1000_50-Hadronizer_TunCUETP8M1_cff.py nevts:500'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/ThirteenTeV/IC-Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py nevts:84'),
     name = cms.untracked.string('Applications')
 )
 
@@ -54,7 +53,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
     outputCommands = process.RAWSIMEventContent.outputCommands,
-    fileName = cms.untracked.string('file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-GEN-SIM.root'),
+    fileName = cms.untracked.string('file:IC-RunIISummer15GS-06337.root'),
     dataset = cms.untracked.PSet(
         filterName = cms.untracked.string(''),
         dataTier = cms.untracked.string('GEN-SIM')

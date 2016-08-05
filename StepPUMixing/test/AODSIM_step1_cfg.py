@@ -2,43 +2,36 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein dbs:/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/RunIIWinter15GS-MCRUN2_71_V1-v1/GEN-SIM --fileout file:AODSIM_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIIWinter15GS-MCRUN2_71_V1-v1/GEN-SIM --mc --eventcontent RAWSIM --pileup 2015_25ns_Startup_PoissonOOTPU --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --conditions MCRUN2_74_V9 --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --magField 38T_PostLS1 --python_filename AODSIM_step1_cfg.py --no_exec -n 500
+# with command line options: step1 --filein file:IC-RunIISummer15GS-06337.root --fileout file:IC-RunIISpring16DR80-01180_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISummer15GS-MCRUN2_71_V1-v2/GEN-SIM --mc --eventcontent RAWSIM --pileup 2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU --datatier GEN-SIM-RAW --conditions 80X_mcRun2_asymptotic_2016_v3 --customise_commands process.simHcalDigis.markAndPass = cms.bool(True) --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --era Run2_25ns --python_filename IC-RunIISpring16DR80-01180_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process('HLT')
+from Configuration.StandardSequences.Eras import eras
+
+process = cms.Process('HLT',eras.Run2_25ns)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
-process.load('SimGeneral.MixingModule.mix_2015_25ns_Startup_PoissonOOTPU_cfi')
+process.load('SimGeneral.MixingModule.mix_2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU_cfi')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
-process.load('Configuration.StandardSequences.MagneticField_38T_PostLS1_cff')
+process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.Digi_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.DigiToRaw_cff')
-process.load('HLTrigger.Configuration.HLT_25ns14e33_v1_cff')
+process.load('HLTrigger.Configuration.HLT_GRun_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(500)
+    input = cms.untracked.int32(102)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
-    fileNames = cms.untracked.vstring('/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/000AA699-2766-E511-9EAA-001E67505105.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/0AC2662A-3766-E511-938F-0022195578C8.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/2C6ECA62-3166-E511-9029-20CF3019DF19.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/42C1F230-3B66-E511-AA9F-001EC9ADC0F0.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/5C31B349-6E66-E511-964B-20CF305616FF.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/5CCB1301-2666-E511-AFCB-20CF3019DEF2.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/64C8C545-3E66-E511-AC8B-901B0E542962.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/88E906FD-2866-E511-914D-001E67505105.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/BC6C52DA-2066-E511-9B53-00259022516E.root', 
-        '/store/mc/RunIIWinter15GS/DMS_NNPDF30_Scalar_Mphi-1000_Mchi-50_gSM-1p0_gDM-1p0_13TeV-powheg/GEN-SIM/MCRUN2_71_V1-v1/30000/C613E552-2366-E511-8EDC-002590207E3C.root'),
+    fileNames = cms.untracked.vstring('file:IC-RunIISummer15GS-06337.root'),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop *_genParticles_*_*', 
         'drop *_genParticlesForJets_*_*', 
@@ -65,7 +58,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step1 nevts:500'),
+    annotation = cms.untracked.string('step1 nevts:102'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -78,7 +71,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
-    fileName = cms.untracked.string('file:AODSIM_step1.root'),
+    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180_step1.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
@@ -86,11 +79,9 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
 # Additional output definition
 
 # Other statements
-import ProdDMS.Filelist.MinBias_TuneCUETP8M1_13TeV_pythia8_RunIIWinter15GS_MCRUN2_71_V1_v1_GEN_SIM_cfi as pu_dataset
-process.mix.input.fileNames = pu_dataset.readFiles
-
-from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '')
+process.mix.input.fileNames = cms.untracked.vstring(['/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/004CC894-4877-E511-A11E-0025905C3DF8.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/0063EDE9-2F77-E511-BAF6-0002C90B7F30.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/0091527A-3E77-E511-B123-002590AC4BF6.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/00BA861E-7779-E511-85DC-0024E85A3F69.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/00F372BD-3C77-E511-8D36-0025901E4F3C.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/00FCB56F-4377-E511-8F47-0025905C2CBC.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/02310BE5-8F79-E511-AD22-02163E010E73.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/023B5EF1-4177-E511-A3E7-00266CFFC7CC.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/02469931-4377-E511-8A79-00259048AC98.root', '/store/mc/RunIISummer15GS/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM/MCRUN2_71_V1-v2/10000/0275943C-5477-E511-A9C5-002481D24972.root'])
+from Configuration.AlCa.GlobalTag import GlobalTag
+process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_v3', '')
 
 # Path and EndPath definitions
 process.digitisation_step = cms.Path(process.pdigi)
@@ -106,12 +97,6 @@ process.schedule.extend([process.endjob_step,process.RAWSIMoutput_step])
 
 # customisation of the process.
 
-# Automatic addition of the customisation function from SLHCUpgradeSimulations.Configuration.postLS1Customs
-from SLHCUpgradeSimulations.Configuration.postLS1Customs import customisePostLS1 
-
-#call to customisation function customisePostLS1 imported from SLHCUpgradeSimulations.Configuration.postLS1Customs
-process = customisePostLS1(process)
-
 # Automatic addition of the customisation function from Configuration.DataProcessing.Utils
 from Configuration.DataProcessing.Utils import addMonitoring 
 
@@ -119,10 +104,15 @@ from Configuration.DataProcessing.Utils import addMonitoring
 process = addMonitoring(process)
 
 # Automatic addition of the customisation function from HLTrigger.Configuration.customizeHLTforMC
-from HLTrigger.Configuration.customizeHLTforMC import customizeHLTforMC 
+from HLTrigger.Configuration.customizeHLTforMC import customizeHLTforFullSim 
 
-#call to customisation function customizeHLTforMC imported from HLTrigger.Configuration.customizeHLTforMC
-process = customizeHLTforMC(process)
+#call to customisation function customizeHLTforFullSim imported from HLTrigger.Configuration.customizeHLTforMC
+process = customizeHLTforFullSim(process)
 
 # End of customisation functions
 
+# Customisation from command line
+process.simHcalDigis.markAndPass = cms.bool(True)
+
+# Customisation from command line
+process.simHcalDigis.markAndPass = cms.bool(True)
