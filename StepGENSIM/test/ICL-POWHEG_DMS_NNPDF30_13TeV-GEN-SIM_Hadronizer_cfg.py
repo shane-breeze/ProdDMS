@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/ThirteenTeV/ICL-PYTHIA8_DMS_13TeV_Pseudoscalar_1000_50-Hadronizer_TunCUETP8M1_cff.py --filein file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE_cfg.py --fileout file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-GEN-SIM.root --mc --eventcontent RAWSIM --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --inputCommands keep *,drop LHEXMLStringProduct_*_*_* --conditions MCRUN2_71_V1::All --beamspot NominalCollision2015 --step GEN,SIM --magField 38T_PostLS1 --python_filename ICL-POWHEG_DMS_NNPDF30_13TeV-GEN-SIM_Hadronizer.py --no_exec -n 500
+# with command line options: Configuration/GenProduction/python/ThirteenTeV/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py --filein file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE.root --fileout file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-GEN-SIM.root --mc --eventcontent RAWSIM --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions MCRUN2_71_V1::All --beamspot Realistic50ns13TeVCollision --step GEN,SIM --magField 38T_PostLS1 --python_filename ICL-POWHEG_DMS_NNPDF30_13TeV-GEN-SIM_Hadronizer_cfg.py --no_exec -n 100
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('SIM')
@@ -17,22 +17,21 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.Geometry.GeometrySimDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_38T_PostLS1_cff')
 process.load('Configuration.StandardSequences.Generator_cff')
-process.load('IOMC.EventVertexGenerators.VtxSmearedNominalCollision2015_cfi')
+process.load('IOMC.EventVertexGenerators.VtxSmearedRealistic50ns13TeVCollision_cfi')
 process.load('GeneratorInterface.Core.genFilterSummary_cff')
 process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(500)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
-    fileNames = cms.untracked.vstring('file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE_cfg.py'),
+    fileNames = cms.untracked.vstring('file:ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_1000_50-LHE.root'),
     inputCommands = cms.untracked.vstring('keep *', 
-        'drop LHEXMLStringProduct_*_*_*', 
         'drop LHEXMLStringProduct_*_*_*'),
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False)
 )
@@ -44,7 +43,7 @@ process.options = cms.untracked.PSet(
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $'),
-    annotation = cms.untracked.string('Configuration/GenProduction/python/ThirteenTeV/ICL-PYTHIA8_DMS_13TeV_Pseudoscalar_1000_50-Hadronizer_TunCUETP8M1_cff.py nevts:500'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/ThirteenTeV/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py nevts:100'),
     name = cms.untracked.string('Applications')
 )
 
@@ -71,33 +70,6 @@ process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_71_V1::All', '')
 
-process.generator = cms.EDFilter("Pythia8HadronizerFilter",
-    pythiaPylistVerbosity = cms.untracked.int32(1),
-    filterEfficiency = cms.untracked.double(1.0),
-    pythiaHepMCVerbosity = cms.untracked.bool(False),
-    comEnergy = cms.double(13000.0),
-    maxEventsToPrint = cms.untracked.int32(1),
-    PythiaParameters = cms.PSet(
-        pythia8CommonSettings = cms.vstring('Tune:preferLHAPDF = 2', 
-            'Main:timesAllowErrors = 10000', 
-            'Check:epTolErr = 0.01', 
-            'Beams:setProductionScalesFromLHEF = off', 
-            'SLHA:keepSM = on', 
-            'SLHA:minMassSM = 1000.', 
-            'ParticleDecays:limitTau0 = on', 
-            'ParticleDecays:tau0Max = 10', 
-            'ParticleDecays:allowPhotonRadiation = on'),
-        pythia8CUEP8M1Settings = cms.vstring('Tune:pp 14', 
-            'Tune:ee 7', 
-            'MultipartonInteractions:pT0Ref=2.4024', 
-            'MultipartonInteractions:ecmPow=0.25208', 
-            'MultipartonInteractions:expPow=1.6'),
-        parameterSets = cms.vstring('pythia8CommonSettings', 
-            'pythia8CUEP8M1Settings')
-    )
-)
-
-
 # Path and EndPath definitions
 process.generation_step = cms.Path(process.pgen)
 process.simulation_step = cms.Path(process.psim)
@@ -107,9 +79,6 @@ process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
 
 # Schedule definition
 process.schedule = cms.Schedule(process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step)
-# filter all path with the production filter sequence
-for path in process.paths:
-	getattr(process,path)._seq = process.generator * getattr(process,path)._seq 
 
 # customisation of the process.
 
