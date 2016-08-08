@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/IC-RunIIWinter15wmLHE-02602-fragment.py --fileout file:IC-RunIIWinter15wmLHE-02602.root --mc --eventcontent LHE --datatier LHE --conditions MCRUN2_71_V1::All --step LHE --python_filename IC-RunIIWinter15wmLHE-02602_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
+# with command line options: Configuration/GenProduction/python/ICL-RunIIWinter15wmLHE-02602-fragment.py --fileout file:ICL-RunIIWinter15wmLHE-02602.root --mc --eventcontent LHE --datatier LHE --conditions MCRUN2_71_V1::All --step LHE --python_filename ICL-RunIIWinter15wmLHE-02602_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('LHE')
@@ -32,7 +32,7 @@ process.options = cms.untracked.PSet(
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $'),
-    annotation = cms.untracked.string('Configuration/GenProduction/python/IC-RunIIWinter15wmLHE-02602-fragment.py nevts:100'),
+    annotation = cms.untracked.string('Configuration/GenProduction/python/ICL-RunIIWinter15wmLHE-02602-fragment.py nevts:100'),
     name = cms.untracked.string('Applications')
 )
 
@@ -42,7 +42,7 @@ process.LHEoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
     outputCommands = process.LHEEventContent.outputCommands,
-    fileName = cms.untracked.string('file:IC-RunIIWinter15wmLHE-02602.root'),
+    fileName = cms.untracked.string('file:ICL-RunIIWinter15wmLHE-02602.root'),
     dataset = cms.untracked.PSet(
         filterName = cms.untracked.string(''),
         dataTier = cms.untracked.string('LHE')
