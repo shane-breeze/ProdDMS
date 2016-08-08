@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein file:IC-RunIISummer15GS-06337.root --fileout file:IC-RunIISpring16DR80-01180_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISummer15GS-MCRUN2_71_V1-v2/GEN-SIM --mc --eventcontent RAWSIM --pileup 2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU --datatier GEN-SIM-RAW --conditions 80X_mcRun2_asymptotic_2016_v3 --customise_commands process.simHcalDigis.markAndPass = cms.bool(True) --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --era Run2_25ns --python_filename IC-RunIISpring16DR80-01180_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
+# with command line options: step1 --filein file:ICL-RunIISummer15GS-06337.root --fileout file:ICL-RunIISpring16DR80-01180_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISummer15GS-MCRUN2_71_V1-v2/GEN-SIM --mc --eventcontent RAWSIM --pileup 2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU --datatier GEN-SIM-RAW --conditions 80X_mcRun2_asymptotic_2016_v3 --customise_commands process.simHcalDigis.markAndPass = cms.bool(True) --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --era Run2_25ns --python_filename ICL-RunIISpring16DR80-01180_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -31,7 +31,7 @@ process.maxEvents = cms.untracked.PSet(
 # Input source
 process.source = cms.Source("PoolSource",
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
-    fileNames = cms.untracked.vstring('file:IC-RunIISummer15GS-06337.root'),
+    fileNames = cms.untracked.vstring('file:ICL-RunIISummer15GS-06337.root'),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop *_genParticles_*_*', 
         'drop *_genParticlesForJets_*_*', 
@@ -71,7 +71,7 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
-    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180_step1.root'),
+    fileName = cms.untracked.string('file:ICL-RunIISpring16DR80-01180_step1.root'),
     outputCommands = process.RAWSIMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )

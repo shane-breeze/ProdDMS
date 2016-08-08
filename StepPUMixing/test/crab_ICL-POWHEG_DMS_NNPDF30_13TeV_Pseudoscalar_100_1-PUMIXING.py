@@ -1,7 +1,7 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName     = 'NNPDF30_13TeV_Pseudoscalar_100_1'
+config.General.requestName     = 'NNPDF30_13TeV_Pseudoscalar_100_1-PUMixing'
 config.General.workArea        = 'ICL-POWHEG_DMS'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
