@@ -36,3 +36,6 @@
 
 # ROOT files
 *.root
+
+# Crab files
+*.log
