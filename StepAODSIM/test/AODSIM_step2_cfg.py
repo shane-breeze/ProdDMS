@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step2 --filein file:IC-RunIISpring16DR80-01180_step1.root --fileout file:IC-RunIISpring16DR80-01180.root --mc --eventcontent RAWAODSIM,DQM --runUnscheduled --datatier RAWAODSIM,DQMIO --conditions 80X_mcRun2_asymptotic_2016_v3 --step RAW2DIGI,L1Reco,RECO,EI,DQM:DQMOfflinePOGMC --era Run2_25ns --python_filename IC-RunIISpring16DR80-01180_2_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
+# with command line options: step2 --filein file:ICL-RunIISpring16DR80-01180_step1.root --fileout file:ICL-RunIISpring16DR80-01180.root --mc --eventcontent RAWAODSIM,DQM --runUnscheduled --datatier RAWAODSIM,DQMIO --conditions 80X_mcRun2_asymptotic_2016_v3 --step RAW2DIGI,L1Reco,RECO,EI,DQM:DQMOfflinePOGMC --era Run2_25ns --python_filename ICL-RunIISpring16DR80-01180_2_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -25,12 +25,12 @@ process.load('DQMOffline.Configuration.DQMOfflineMC_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(102)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:IC-RunIISpring16DR80-01180_step1.root'),
+    fileNames = cms.untracked.vstring('file:ICL-RunIISpring16DR80-01180_step1.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -40,7 +40,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step2 nevts:102'),
+    annotation = cms.untracked.string('step2 nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -55,7 +55,7 @@ process.RAWAODSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
-    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180.root'),
+    fileName = cms.untracked.string('file:ICL-RunIISpring16DR80-01180.root'),
     outputCommands = process.RAWAODSIMEventContent.outputCommands
 )
 
@@ -64,7 +64,7 @@ process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
         dataTier = cms.untracked.string('DQMIO'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180_inDQM.root'),
+    fileName = cms.untracked.string('file:ICL-RunIISpring16DR80-01180_inDQM.root'),
     outputCommands = process.DQMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )

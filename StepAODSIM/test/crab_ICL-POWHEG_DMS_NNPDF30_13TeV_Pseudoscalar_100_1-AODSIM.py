@@ -8,7 +8,7 @@ config.General.transferLogs    = True
 
 config.JobType.pluginName = 'ANALYSIS'
 config.JobType.psetName   = 'AODSIM_step2_cfg.py'
-config.JobType.outputFiles = ['AODSIM_step2.root',]
+config.JobType.outputFiles = ['ICL-RunIISpring16DR80-01180.root',]
 
 config.Data.inputDataset         = '' # change inputDataset
 config.Data.inputDBS             = 'phys03'
