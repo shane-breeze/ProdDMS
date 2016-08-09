@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein file:ICL-RunIISummer15GS-06337.root --fileout file:ICL-RunIISpring16DR80-01180_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISummer15GS-MCRUN2_71_V1-v2/GEN-SIM --mc --eventcontent RAWSIM --pileup 2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU --datatier GEN-SIM-RAW --conditions 80X_mcRun2_asymptotic_2016_v3 --customise_commands process.simHcalDigis.markAndPass = cms.bool(True) --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --era Run2_25ns --python_filename ICL-RunIISpring16DR80-01180_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
+# with command line options: step1 --filein file:ICL-RunIISummer15GS-06337.root --fileout file:ICL-RunIISpring16DR80-01180_step1.root --pileup_input dbs:/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISummer15GS-MCRUN2_71_V1-v2/GEN-SIM --mc --eventcontent RAWSIM --pileup 2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU --datatier GEN-SIM-RAW --conditions 80X_mcRun2_asymptotic_2016_v3 --customise_commands process.simHcalDigis.markAndPass = cms.bool(True) --step DIGI,L1,DIGI2RAW,HLT:@frozen25ns --era Run2_25ns --python_filename ICL-RunIISpring16DR80-01180_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -25,7 +25,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(102)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
@@ -58,7 +58,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step1 nevts:102'),
+    annotation = cms.untracked.string('step1 nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
