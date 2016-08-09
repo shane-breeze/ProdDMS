@@ -8,7 +8,7 @@ config.General.transferLogs    = True
 
 config.JobType.pluginName = 'ANALYSIS'
 config.JobType.psetName   = 'AODSIM_step1_cfg.py'
-config.JobType.outputFiles = ['AODSIM_step1.root',]
+config.JobType.outputFiles = ['ICL-RunIISpring16DR80-01180_step1.root',]
 
 config.Data.inputDataset         = '/NNPDF30_13TeV_Pseudoscalar_100_1-LHE/sbreeze-ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_100_1_v2-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER' # Change inputDataset
 config.Data.inputDBS             = 'phys03'
