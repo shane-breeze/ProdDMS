@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein file:IC-RunIISpring16DR80-01180.root --fileout file:IC-RunIISpring16MiniAODv2-00842.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 80X_mcRun2_asymptotic_2016_miniAODv2_v0 --step PAT --era Run2_25ns --python_filename IC-RunIISpring16MiniAODv2-00842_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 1920
+# with command line options: step1 --filein file:ICL-RunIISpring16DR80-01180.root --fileout file:ICL-RunIISpring16MiniAODv2-00842.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 80X_mcRun2_asymptotic_2016_miniAODv2_v0 --step PAT --era Run2_25ns --python_filename ICL-RunIISpring16MiniAODv2-00842_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 100
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -22,12 +22,12 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1920)
+    input = cms.untracked.int32(100)
 )
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:IC-RunIISpring16DR80-01180.root'),
+    fileNames = cms.untracked.vstring('file:ICL-RunIISpring16DR80-01180.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -37,7 +37,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step1 nevts:1920'),
+    annotation = cms.untracked.string('step1 nevts:100'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -54,7 +54,7 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
     dropMetaData = cms.untracked.string('ALL'),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
     fastCloning = cms.untracked.bool(False),
-    fileName = cms.untracked.string('file:IC-RunIISpring16MiniAODv2-00842.root'),
+    fileName = cms.untracked.string('file:ICL-RunIISpring16MiniAODv2-00842.root'),
     outputCommands = process.MINIAODSIMEventContent.outputCommands,
     overrideInputFileSplitLevels = cms.untracked.bool(True)
 )
