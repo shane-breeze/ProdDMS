@@ -1,16 +1,16 @@
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName     = 'NNPDF30_13TeV_Pseudoscalar_100_1-MINIAODv2'
+config.General.requestName     = 'NNPDF30_13TeV_Pseudoscalar_100_1'
 config.General.workArea        = 'ICL-POWHEG_DMS'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
 
 config.JobType.pluginName = 'ANALYSIS'
 config.JobType.psetName   = 'MiniAODv2_cfg.py'
-config.JobType.outputFiles = ['ICL-RunIISpring16MiniAODv2-00842.root']
+config.JobType.outputFiles = ['MiniAODv2.root']
 
-config.Data.inputDataset         = '/NNPDF30_13TeV_Pseudoscalar_100_1-LHE/sbreeze-ICL-POWHEG_DMS_NNPDF30_13TeV_Pseudoscalar_100_1-2016_25ns_SpringMC_PUScenarioV1_PoissonOOTPU-AODSIM-3289af86e5ac35ce101adf50782c2be1/USER' # Change inputDataset
+config.Data.inputDataset         = '' # Change inputDataset
 config.Data.inputDBS             = 'phys03'
 config.Data.splitting            = 'EventAwareLumiBased'
 config.Data.unitsPerJob          = 400
