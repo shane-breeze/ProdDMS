@@ -49,9 +49,9 @@ sed -i "s/rand2\s\+[0-9]\+/rand2   123/" powheg.input
 
 mv cmsgrid_final.lhe $LHEWORKDIR/cmsgrid_final_nevt-${nevt}_rnum-${rnum}.lhe
 
+cd $LHEWORKDIR
+
 #clean up output directory
 rm -rf $LHEDIR
-
-cd $LHEWORKDIR
 
 exit 0
