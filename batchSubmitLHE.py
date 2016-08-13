@@ -19,23 +19,26 @@ def defaultCommands(inputFile, maxEvents, nJobs, outDir):
 
     jobEvents = maxEvents/nJobs
     finalEvent = maxEvents - jobEvents*nJobs
-    jobSeed = "expr ${SGE_TASK_ID} - 1"
 
     default =  "#!/bin/bash\n"
     default += "export OUTDIR={0}\n".format(outDir)
     default += "export GRIDPACK={0}\n".format(inputFile)
+    default += "export JOBSEED=$(expr ${SGE_TASK_ID} - 1)\n"
     default += "mkdir -p $OUTDIR\n"
     default += "cd $OUTDIR\n"
+    default += "source /vols/grid/cms/setup.sh\n"
+    default += "export SCRAM_ARCH=slc6_amd64_gcc530\n"
+    default += "eval `scramv1 runtime -sh`\n"
     if finalEvent != 0:
         default += "if [ ${SGE_TASK_ID} != ${SGE_TASK_LAST} ]; then\n"
-        default += "    ../../../runGenericTarballCvmfs.sh $GRIDPACK {0} {1}\n"\
-                .format(jobEvents, jobSeed)
+        default += "    ../../../runGenericTarballCvmfs.sh $GRIDPACK {0} $JOBSEED\n"\
+                .format(jobEvents)
         default += "else\n"
-        default += "    ../../../runGenericTarballCvmfs.sh $GRIDPACK {0} {1}"\
-                .format(finalEvent+jobEvents, jobSeed)
+        default += "    ../../../runGenericTarballCvmfs.sh $GRIDPACK {0} $JOBSEED"\
+                .format(finalEvent+jobEvents)
     else:
-        default += "../../../runGenericTarballCvmfs.sh $GRIDPACK {0} {1}"\
-                .format(jobEvents, jobSeed)
+        default += "../../../runGenericTarballCvmfs.sh $GRIDPACK {0} $JOBSEED"\
+                .format(jobEvents)
     return default
 
 #_____________________________________________________________________________||
