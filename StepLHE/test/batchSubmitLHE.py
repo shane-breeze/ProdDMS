@@ -13,6 +13,8 @@ def parseArgs():
             help="Number of jobs to submit")
     parser.add_option("-o","--outDir",type='string',default=".",
             help="Output directory of LHE files")
+    parser.add_option("-t","--time",type='string',default="3:0:0",
+            help="The time options for qsub")
     return parser.parse_args()
 
 #_____________________________________________________________________________||
@@ -57,7 +59,7 @@ def defaultCommands(inputFile, maxEvents, nJobs, outDir):
     return default
 
 #_____________________________________________________________________________||
-def batchSubmitLHE(inputFile, maxEvents, nJobs, outDir):
+def batchSubmitLHE(inputFile, maxEvents, nJobs, outDir, time):
     shellPath = "submitScript_"+\
             inputFile.split('/')[-1].replace("_tarball.tar.gz","")
 
@@ -85,7 +87,7 @@ def batchSubmitLHE(inputFile, maxEvents, nJobs, outDir):
 
     command = " ".join(["chmod","+x",shellPath])
     os.system(command)
-    command = " ".join(["qsub","-q","hep.q","-l","h_rt=3:0:0","-t",
+    command = " ".join(["qsub","-q","hep.q","-l","h_rt={0}".format(time),"-t",
         "1-{0}:1".format(nJobs),shellPath])
     os.system(command)
 
@@ -102,4 +104,5 @@ if __name__ == "__main__":
     batchSubmitLHE(sys.argv[1], 
             options.maxEvents, 
             options.nJobs, 
-            options.outDir)
+            options.outDir,
+            options.time)
