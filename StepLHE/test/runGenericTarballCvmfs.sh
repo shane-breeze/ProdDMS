@@ -39,10 +39,6 @@ tar -xaf ${path}
 
 #uncomment RNG seed and rand1/rand2
 sed -i 's/#iseed/iseed/' powheg.input
-sed -i 's/#rand1/rand1/' powheg.input
-sed -i 's/#rand2/rand2/' powheg.input
-sed -i "s/rand1\s\+[0-9]\+/rand1   456/" powheg.input
-sed -i "s/rand2\s\+[0-9]\+/rand2   123/" powheg.input
 
 #generate events (call for 1 core always for now until hooks to set number of cores are implemented upstream)
 ./runcmsgrid.sh $nevt $rnum 1
