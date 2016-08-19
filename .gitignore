@@ -39,3 +39,6 @@
 
 # Crab files
 *.log
+
+# CMSSW
+CMSSW_*
