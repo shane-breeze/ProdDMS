@@ -97,6 +97,7 @@ def runMC(step, test, status, kill):
         makeTestDir(test, "/".join(min_cfg.xmlFile.split('/')[:-1]))
         mcStep(min_cfg, "Step5-MINIAODSIM/cmsRunMINIAOD_cfg.py", "Step5-MINIAODSIM/crabMINIAOD_cfg.py", test, status, kill)
         moveTestFile(test, min_cfg.outputRootFile, "/".join(min_cfg.xmlFile.split('/')[:-1]))
+        moveTestFile(test, "histProbFunction.root", "/".join(min_cfg.xmlFile.split('/')[:-1]))
         pass
     else:
         raise RuntimeError, "step must be one of: LHE, GENSIM, PUMixing, AODSIM or MINIAODSIM"
