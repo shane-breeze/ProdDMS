@@ -1,5 +1,9 @@
 ################################################################################
 # Config file for the GENSIM step                                              #
+# 1) If privateLHE is True, then EDM-format LHE files are used from the IC T2  #
+#    site.                                                                     #
+# 2) If privateLHE is False, then EDM-format LHE files are used from a global  #
+#    dataset produced from the official MC production.                         #
 #                                                                              #
 ################################################################################
 
