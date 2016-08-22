@@ -28,9 +28,13 @@ def mcStep(cfg, cfgFile, crabFile, test, status, kill):
     command = []
     if status:
         crabOutput = os.path.join(cfg.workArea, "crab_"+cfg.requestName)
+        if not os.path.exists(crabOutput):
+            raise RuntimeError, "Could not find crab output folder "+crabOutput
         command = ["crab","status","-d",crabOutput]
     elif kill:
         crabOutput = os.path.join(cfg.workArea, "crab_"+cfg.requestName)
+        if not os.path.exists(crabOutput):
+            raise RuntimeError, "Could not find crab output folder "+crabOutput
         command = ["crab","kill","-d",crabOutput]
     elif test:
         xmlFile = cfg.xmlFile

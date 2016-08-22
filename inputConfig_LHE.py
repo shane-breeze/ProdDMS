@@ -23,7 +23,7 @@ av_1750_10_cfg.outputRootFile = testPath+'ICL-Axial_1750_10-LHE.root'
 av_1750_10_cfg.xmlFile        = testPath+'ICL-Axial_1750_10-LHEtest.xml'
 
 av_1750_10_cfg.requestName          = 'NNPDF30_13TeV_Axial_1750_10-LHE'
-av_1750_10_cfg.workArea             = crabPath+'crab_Axial_1750_10-LHE'
+av_1750_10_cfg.workArea             = crabPath
 av_1750_10_cfg.maxEvents            = 300000
 av_1750_10_cfg.outputPrimaryDataset = 'NNPDF30_13TeV_Axial_1750_10-LHE'
 av_1750_10_cfg.outputDatasetTag     = 'ICL-POWHEG_DMV_NNPDF30_13TeV_Axial_1750_10-LHE'
@@ -38,7 +38,7 @@ test_cfg.outputRootFile = testPath+'ICL-Axial_1750_10-LHE.root'
 test_cfg.xmlFile        = testPath+'ICL-Axial_1750_10-LHEtest.xml'
 
 test_cfg.requestName          = 'test_Axial_1750_10-LHE'
-test_cfg.workArea             = crabPath+'test_Axial_1750_10-LHE'
+test_cfg.workArea             = crabPath
 test_cfg.maxEvents            = 10
 test_cfg.outputPrimaryDataset = 'test_Axial_1750_10-LHE'
 test_cfg.outputDatasetTag     = 'test_Axial_1750_10-LHE'
