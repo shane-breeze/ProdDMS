@@ -53,7 +53,7 @@ def runMC(step, test, status, kill):
     if step.lower() == "lhe":
         mcStep(lhe_cfg, "Step1-LHE/cmsRunLHE_cfg.py", "Step1-LHE/crabLHE_cfg.py", test, status, kill)
     elif step.lower() == "gensim":
-        mcStep(gen_cfg, "Step2-GENSIM/cmsRunGEN_cfg.py", "Step2-GENSIM/crabGEN_cfg.py", test, status, kill)
+        mcStep(gen_cfg, "Step2-GENSIM/cmsRunGENSIM_cfg.py", "Step2-GENSIM/crabGENSIM_cfg.py", test, status, kill)
     elif step.lower() == "pumixing":
         mcStep(pum_cfg, "Step3-PUMixing/cmsRunPU_cfg.py", "Step3-PUMixing/crabPU_cfg.py", test, status, kill)
     elif step.lower() == "aodsim":

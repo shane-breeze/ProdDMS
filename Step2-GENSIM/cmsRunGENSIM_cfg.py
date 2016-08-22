@@ -1,13 +1,14 @@
-# Auto generated configuration file
+# Modified auto generated configuration file
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
 # with command line options: Configuration/GenProduction/python/ThirteenTeV/ICL-Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py --filein file:ICL-RunIIWinter15wmLHE-02602.root --fileout file:ICL-RunIISummer15GS-06337.root --mc --eventcontent RAWSIM --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM --conditions MCRUN2_71_V1::All --beamspot Realistic50ns13TeVCollision --step GEN,SIM --magField 38T_PostLS1 --python_filename ICL-RunIISummer15GS-06337_1_cfg.py --no_exec -n 84
 import FWCore.ParameterSet.Config as cms
+from inputConfig_GENSIM import inputConfig
 
 process = cms.Process('SIM')
 
-# import of standard configurations
+#_import_of_standard_configurations___________________________________________||
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
@@ -24,13 +25,13 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(inputConfig.testEvents)
 )
 
-# Input source
+#_Input_source________________________________________________________________||
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
-    fileNames = cms.untracked.vstring('file:ICL-RunIIWinter15wmLHE-02602.root'),
+    fileNames = cms.untracked.vstring(inputConfig.testInputDataset),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop LHEXMLStringProduct_*_*_*'),
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False)
@@ -40,20 +41,24 @@ process.options = cms.untracked.PSet(
 
 )
 
-# Production Info
+#_Production_Info_____________________________________________________________||
 process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $'),
     annotation = cms.untracked.string('Configuration/GenProduction/python/ThirteenTeV/ICL-Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py nevts:84'),
     name = cms.untracked.string('Applications')
 )
 
-# Output definition
+#_Output definition___________________________________________________________||
+import os
+outDir = "/".join(inputConfig.outputRootFile.split('/')[:-1])
+if not os.path.exists(outDir):
+    os.makedirs(outDir)
 
 process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
     splitLevel = cms.untracked.int32(0),
     eventAutoFlushCompressedSize = cms.untracked.int32(5242880),
     outputCommands = process.RAWSIMEventContent.outputCommands,
-    fileName = cms.untracked.string('file:ICL-RunIISummer15GS-06337.root'),
+    fileName = cms.untracked.string('file:{0}'.format(inputConfig.outputRootFile)),
     dataset = cms.untracked.PSet(
         filterName = cms.untracked.string(''),
         dataTier = cms.untracked.string('GEN-SIM')
@@ -63,9 +68,9 @@ process.RAWSIMoutput = cms.OutputModule("PoolOutputModule",
     )
 )
 
-# Additional output definition
+#_Additional_output_definition________________________________________________||
 
-# Other statements
+#_Other_statements____________________________________________________________||
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_71_V1::All', '')
@@ -97,31 +102,35 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 )
 
 
-# Path and EndPath definitions
+#_Path_and_EndPath_definitions________________________________________________||
 process.generation_step = cms.Path(process.pgen)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
 
-# Schedule definition
+#_Schedule_definition_________________________________________________________||
 process.schedule = cms.Schedule(process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step)
-# filter all path with the production filter sequence
+#_filter_all_path_with_the_production_filter_sequence_________________________||
 for path in process.paths:
 	getattr(process,path)._seq = process.generator * getattr(process,path)._seq 
 
-# customisation of the process.
+#_customisation_of_the_process._______________________________________________||
 
-# Automatic addition of the customisation function from Configuration.DataProcessing.Utils
+#_Automatic_addition_of_the_customisation_function_from_______________________||
+#_Configuration.DataProcessing.Utils__________________________________________||
 from Configuration.DataProcessing.Utils import addMonitoring 
 
-#call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
+#_call_to_customisation_function_addMonitoring_imported_from__________________||
+#_Configuration.DataProcessing.Utils__________________________________________||
 process = addMonitoring(process)
 
-# Automatic addition of the customisation function from SLHCUpgradeSimulations.Configuration.postLS1Customs
+#_Automatic_addition_of_the_customisation_function_from_______________________||
+#_SLHCUpgradeSimulations.Configuration.postLS1Customs_________________________||
 from SLHCUpgradeSimulations.Configuration.postLS1Customs import customisePostLS1 
 
-#call to customisation function customisePostLS1 imported from SLHCUpgradeSimulations.Configuration.postLS1Customs
+#_call_to_customisation_function_customisePostLS1_imported_from_______________||
+#_SLHCUpgradeSimulations.Configuration.postLS1Customs_________________________||
 process = customisePostLS1(process)
 
-# End of customisation functions
+#_End_of_customisation_functions______________________________________________||
