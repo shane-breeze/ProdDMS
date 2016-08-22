@@ -1,15 +1,16 @@
-# Auto generated configuration file
+# Modified auto generated configuration file
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
 # with command line options: step2 --filein file:IC-RunIISpring16DR80-01180_step1.root --fileout file:IC-RunIISpring16DR80-01180.root --mc --eventcontent RAWAODSIM,DQM --runUnscheduled --datatier RAWAODSIM,DQMIO --conditions 80X_mcRun2_asymptotic_2016_v3 --step RAW2DIGI,L1Reco,RECO,EI,DQM:DQMOfflinePOGMC --era Run2_25ns --python_filename IC-RunIISpring16DR80-01180_2_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 102
 import FWCore.ParameterSet.Config as cms
+from inputConfig_AODSIM import inputConfig
 
 from Configuration.StandardSequences.Eras import eras
 
 process = cms.Process('RECO',eras.Run2_25ns)
 
-# import of standard configurations
+#_import_of_standard_configurations___________________________________________||
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
@@ -25,12 +26,12 @@ process.load('DQMOffline.Configuration.DQMOfflineMC_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(102)
+    input = cms.untracked.int32(inputConfig.testEvents)
 )
 
-# Input source
+#_Input_source________________________________________________________________||
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:IC-RunIISpring16DR80-01180_step1.root'),
+    fileNames = cms.untracked.vstring(inputConfig.testInputDataset),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -38,14 +39,14 @@ process.options = cms.untracked.PSet(
     allowUnscheduled = cms.untracked.bool(True)
 )
 
-# Production Info
+#_Production_Info_____________________________________________________________||
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step2 nevts:102'),
+    annotation = cms.untracked.string('step2 nevts:{0}'.format(inputConfig.testEvents)),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
 
-# Output definition
+#_Output_definition___________________________________________________________||
 
 process.RAWAODSIMoutput = cms.OutputModule("PoolOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
@@ -55,7 +56,7 @@ process.RAWAODSIMoutput = cms.OutputModule("PoolOutputModule",
         filterName = cms.untracked.string('')
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
-    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180.root'),
+    fileName = cms.untracked.string('file:{0}'.format(inputConfig.outputRootFile)),
     outputCommands = process.RAWAODSIMEventContent.outputCommands
 )
 
@@ -64,18 +65,18 @@ process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
         dataTier = cms.untracked.string('DQMIO'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('file:IC-RunIISpring16DR80-01180_inDQM.root'),
+    fileName = cms.untracked.string('file:{0}'.format(inputConfig.outputRootFile.replace('.root','_inDQM.root'))),
     outputCommands = process.DQMEventContent.outputCommands,
     splitLevel = cms.untracked.int32(0)
 )
 
-# Additional output definition
+#_Additional_output_definition________________________________________________||
 
-# Other statements
+#_Other_statements____________________________________________________________||
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_v3', '')
 
-# Path and EndPath definitions
+#_Path_and_EndPath_definitions________________________________________________||
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.L1Reco_step = cms.Path(process.L1Reco)
 process.reconstruction_step = cms.Path(process.reconstruction)
@@ -85,19 +86,22 @@ process.dqmofflineOnPAT_step = cms.Path(process.DQMOfflinePOGMC)
 process.RAWAODSIMoutput_step = cms.EndPath(process.RAWAODSIMoutput)
 process.DQMoutput_step = cms.EndPath(process.DQMoutput)
 
-# Schedule definition
+#_Schedule_definition_________________________________________________________||
 process.schedule = cms.Schedule(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,process.eventinterpretaion_step,process.dqmoffline_step,process.dqmofflineOnPAT_step,process.RAWAODSIMoutput_step,process.DQMoutput_step)
 
-# customisation of the process.
+#_customisation_of_the_process._______________________________________________||
 
-# Automatic addition of the customisation function from Configuration.DataProcessing.Utils
+#_Automatic_addition_of_the_customisation_function_from_______________________||
+#_Configuration.DataProcessing.Utils__________________________________________||
 from Configuration.DataProcessing.Utils import addMonitoring 
 
-#call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
+#_call_to_customisation_function_addMonitoring_imported_from__________________||
+#_Configuration.DataProcessing.Utils__________________________________________||
 process = addMonitoring(process)
 
-# End of customisation functions
-#do not add changes to your config after this point (unless you know what you are doing)
+#_End_of_customisation_functions______________________________________________||
+#_do_not_add_changes_to_your_config_after_this_point_(unless_you_know_what____||
+#_you_are_doing)______________________________________________________________||
 from FWCore.ParameterSet.Utilities import convertToUnscheduled
 process=convertToUnscheduled(process)
 from FWCore.ParameterSet.Utilities import cleanUnscheduled

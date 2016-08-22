@@ -80,6 +80,7 @@ def runMC(step, test, status, kill):
         makeTestDir(test, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
         mcStep(aod_cfg, "Step4-AODSIM/cmsRunAOD_cfg.py", "Step4-AODSIM/crabAOD_cfg.py", test, status, kill)
         moveTestFile(test, aod_cfg.outputRootFile, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
+        moveTestFile(test, aod_cfg.outputRootFile.replace('.root','_inDQM.root'), "/".join(aod_cfg.xmlFile.split('/')[:-1]))
         pass
     elif step.lower() == "miniaodsim":
         makeTestDir(test, "/".join(min_cfg.xmlFile.split('/')[:-1]))
