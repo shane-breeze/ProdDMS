@@ -24,6 +24,21 @@ def parseArgs():
     return parser.parse_args()
 
 #_____________________________________________________________________________||
+def makeTestDir(test, testDir):
+    if test:
+        if not os.path.exists(testDir):
+            os.makedirs(testDir)
+        pass
+    pass
+
+#_____________________________________________________________________________||
+def moveTestFile(test, testFile, testDir):
+    if test:
+        command = ["mv", testFile, os.path.join(testDir, testFile)]
+        subprocess.call(command)
+    pass
+
+#_____________________________________________________________________________||
 def mcStep(cfg, cfgFile, crabFile, test, status, kill):
     command = []
     if status:
@@ -52,17 +67,28 @@ def mcStep(cfg, cfgFile, crabFile, test, status, kill):
 def runMC(step, test, status, kill):
     if step.lower() == "lhe":
         mcStep(lhe_cfg, "Step1-LHE/cmsRunLHE_cfg.py", "Step1-LHE/crabLHE_cfg.py", test, status, kill)
+        pass
     elif step.lower() == "gensim":
         mcStep(gen_cfg, "Step2-GENSIM/cmsRunGENSIM_cfg.py", "Step2-GENSIM/crabGENSIM_cfg.py", test, status, kill)
+        pass
     elif step.lower() == "pumixing":
+        makeTestDir(test, "/".join(pum_cfg.xmlFile.split('/')[:-1]))
         mcStep(pum_cfg, "Step3-PUMixing/cmsRunPU_cfg.py", "Step3-PUMixing/crabPU_cfg.py", test, status, kill)
+        moveTestFile(test, pum_cfg.outputRootFile, "/".join(pum_cfg.xmlFile.split('/')[:-1]))
+        pass
     elif step.lower() == "aodsim":
+        makeTestDir(test, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
         mcStep(aod_cfg, "Step4-AODSIM/cmsRunAOD_cfg.py", "Step4-AODSIM/crabAOD_cfg.py", test, status, kill)
+        moveTestFile(test, aod_cfg.outputRootFile, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
+        pass
     elif step.lower() == "miniaodsim":
+        makeTestDir(test, "/".join(min_cfg.xmlFile.split('/')[:-1]))
         mcStep(min_cfg, "Step5-MINIAODSIM/cmsRunMINIAOD_cfg.py", "Step5-MINIAODSIM/crabMINIAOD_cfg.py", test, status, kill)
+        moveTestFile(test, min_cfg.outputRootFile, "/".join(min_cfg.xmlFile.split('/')[:-1]))
+        pass
     else:
-        raise RuntimeError, "step must be one of: LHE, GENSIM, PUMixing, "+\
-                "AODSIM or MINIAODSIM"
+        raise RuntimeError, "step must be one of: LHE, GENSIM, PUMixing, AODSIM or MINIAODSIM"
+        pass
     pass
 
 #_____________________________________________________________________________||

@@ -11,3 +11,4 @@ export CMSSW_MINIAODSIM=${PWD}/CMSSW_8_0_5_patch1/src
 
 export PYTHONPATH=${PYTHONPATH}:${PWD}
 export PYTHONPATH=${PYTHONPATH}:${PWD}/python
+export PYTHONPATH=${PYTHONPATH}:${PWD}/Step3-PUMixing

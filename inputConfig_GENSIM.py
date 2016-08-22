@@ -29,7 +29,6 @@ av_1750_10_cfg.outputDatasetTag = 'ICL-POWHEG_DMV_NNPDF30_13TeV_Axial_1750_10-GE
 
 #_test________________________________________________________________________||
 test_cfg = config()
-test_cfg = config()
 test_cfg.testEvents       = 10
 test_cfg.testInputDataset = '/store/user/sbreeze/NNPDF30_13TeV_Axial_1750_10-LHE/ICL-POWHEG_DMV_NNPDF30_13TeV_Axial_1750_10-LHE/160818_030604/0000/IC-RunIIWinter15wmLHE-02602_1.root'
 test_cfg.outputRootFile   = testPath+'ICL-Axial_1750_10-GENSIM.root'
