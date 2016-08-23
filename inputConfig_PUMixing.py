@@ -34,7 +34,7 @@ test_cfg.workArea         = crabPath
 test_cfg.unitsPerJob      = 10
 test_cfg.totalUnits       = 20
 test_cfg.outputRootFile   = 'ICL-Axial_1750_400-PUMixing.root'
-test_cfg.outputDatasetTag = 'test_Axial_1750_400-PUMixing'
+test_cfg.outputDatasetTag = 'test_Axial_1750_400_PUMix'
 
 #_____________________________________________________________________________||
 inputConfig = test_cfg

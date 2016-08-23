@@ -43,3 +43,6 @@
 
 # CMSSW
 CMSSW_*
+
+# LHE list
+**/lheList
