@@ -95,6 +95,9 @@ into one. To do this, we need the list of all lhe files:
 export LHEDIR=${OUTDIR}/$(basename $GRIDPACK | sed 's/_tarball.tar.gz//g' | awk '{print "lheFiles_"$1}')
 ls -d -1 $LHEDIR/*.lhe > lheList
 ./mergeLheFiles lheList
+```
+After it finishes merging the files move it to the relevant directory
+```bash
 export LHEFILE==$(echo $LHEDIR | sed 's/lheFiles_/cmsgrid_/g' | awk '{print $1".lhe"}')
 mv out.lhe $LHEFILE
 ```
