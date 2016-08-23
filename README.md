@@ -138,15 +138,29 @@ myobject = config()
 ```
 
 `produceLHE` must be `True` if you want to generate the LHE files on the GRID
-and `False` if you've already created them. `testEvents` is the number of events
-to run over during the test. `lheFile` is the path on the T2 storage site to the
-LHE file. `gridPack` is the path to the grid-pack. `outputRootFile` is the name
-of the output root file. `xmlFile` is the name of the xml file from the test run.
-`requestName` is the requested name in the CRAB config. `workArea` is the 
-location of the output CRAB logs (no need to change). `maxEvents` is the total 
-number of events to submit to the GRID, `outputPrimaryDataset` is a CRAB
-parameter. `outputDatasetTag` is a CRAB parameter. All of these parameters must
-be set.
+and `False` if you've already created them. 
+
+`testEvents` is the number of events to run over during the test. 
+
+`lheFile` is the path on the T2 storage site to the LHE file.
+
+`gridPack` is the path to the grid-pack. 
+
+`outputRootFile` is the name of the output root file. 
+
+`xmlFile` is the name of the xml file from the test run.
+
+`requestName` is the requested name in the CRAB config. 
+
+`workArea` is the location of the output CRAB logs (no need to change). 
+
+`maxEvents` is the total number of events to submit to the GRID, 
+
+`outputPrimaryDataset` is a CRAB parameter. 
+
+`outputDatasetTag` is a CRAB parameter. 
+
+All of these parameters must be set.
 
 To use the object you've created, at the end of the file make your object copy 
 into `inputConfig`:
