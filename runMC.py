@@ -21,6 +21,8 @@ def parseArgs():
             help="Report the status of the CRAB jobs")
     parser.add_option("--kill",action='store_true',default=False,
             help="Kill the CRAB jobs")
+    parser.add_option("--resubmit",action='store_true',default=False,
+            help="Resubmit failed jobs")
     return parser.parse_args()
 
 #_____________________________________________________________________________||
@@ -45,7 +47,7 @@ def checkCMSSW(cmsswName):
     pass
 
 #_____________________________________________________________________________||
-def mcStep(cfg, cfgFile, crabFile, test, status, kill):
+def mcStep(cfg, cfgFile, crabFile, test, status, kill, resubmit):
     command = []
     if status:
         crabOutput = os.path.join(cfg.workArea, "crab_"+cfg.requestName)
@@ -60,6 +62,11 @@ def mcStep(cfg, cfgFile, crabFile, test, status, kill):
     elif test:
         xmlFile = cfg.xmlFile
         command = ["cmsRun","-e","-j",xmlFile,cfgFile]
+    elif resubmit:
+        crabOutput = os.path.join(cfg.workArea, "crab_"+cfg.requestName)
+        if not os.path.exists(crabOutput):
+            raise RuntimeError, "Could not find crab output folder "+crabOutput
+        command = ["crab","resubmit","-d",crabOutput]
     else:
         command = ["crab","submit","-c",crabFile]
     subprocess.call(command)
@@ -70,32 +77,32 @@ def mcStep(cfg, cfgFile, crabFile, test, status, kill):
     pass
 
 #_____________________________________________________________________________||
-def runMC(step, test, status, kill):
+def runMC(step, test, status, kill, resubmit):
     if step.lower() == "lhe":
         checkCMSSW("CMSSW_7_1_21")
-        mcStep(lhe_cfg, "Step1-LHE/cmsRunLHE_cfg.py", "Step1-LHE/crabLHE_cfg.py", test, status, kill)
+        mcStep(lhe_cfg, "Step1-LHE/cmsRunLHE_cfg.py", "Step1-LHE/crabLHE_cfg.py", test, status, kill, resubmit)
         pass
     elif step.lower() == "gensim":
         checkCMSSW("CMSSW_7_1_21")
-        mcStep(gen_cfg, "Step2-GENSIM/cmsRunGENSIM_cfg.py", "Step2-GENSIM/crabGENSIM_cfg.py", test, status, kill)
+        mcStep(gen_cfg, "Step2-GENSIM/cmsRunGENSIM_cfg.py", "Step2-GENSIM/crabGENSIM_cfg.py", test, status, kill, resubmit)
         pass
     elif step.lower() == "pumixing":
         checkCMSSW("CMSSW_8_0_3_patch2")
         makeTestDir(test, "/".join(pum_cfg.xmlFile.split('/')[:-1]))
-        mcStep(pum_cfg, "Step3-PUMixing/cmsRunPU_cfg.py", "Step3-PUMixing/crabPU_cfg.py", test, status, kill)
+        mcStep(pum_cfg, "Step3-PUMixing/cmsRunPU_cfg.py", "Step3-PUMixing/crabPU_cfg.py", test, status, kill, resubmit)
         moveTestFile(test, pum_cfg.outputRootFile, "/".join(pum_cfg.xmlFile.split('/')[:-1]))
         pass
     elif step.lower() == "aodsim":
         checkCMSSW("CMSSW_8_0_3_patch2")
         makeTestDir(test, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
-        mcStep(aod_cfg, "Step4-AODSIM/cmsRunAOD_cfg.py", "Step4-AODSIM/crabAOD_cfg.py", test, status, kill)
+        mcStep(aod_cfg, "Step4-AODSIM/cmsRunAOD_cfg.py", "Step4-AODSIM/crabAOD_cfg.py", test, status, kill, resubmit)
         moveTestFile(test, aod_cfg.outputRootFile, "/".join(aod_cfg.xmlFile.split('/')[:-1]))
         moveTestFile(test, aod_cfg.outputRootFile.replace('.root','_inDQM.root'), "/".join(aod_cfg.xmlFile.split('/')[:-1]))
         pass
     elif step.lower() == "miniaodsim":
         checkCMSSW("CMSSW_8_0_5_patch1")
         makeTestDir(test, "/".join(min_cfg.xmlFile.split('/')[:-1]))
-        mcStep(min_cfg, "Step5-MINIAODSIM/cmsRunMINIAOD_cfg.py", "Step5-MINIAODSIM/crabMINIAOD_cfg.py", test, status, kill)
+        mcStep(min_cfg, "Step5-MINIAODSIM/cmsRunMINIAOD_cfg.py", "Step5-MINIAODSIM/crabMINIAOD_cfg.py", test, status, kill, resubmit)
         moveTestFile(test, min_cfg.outputRootFile, "/".join(min_cfg.xmlFile.split('/')[:-1]))
         moveTestFile(test, "histProbFunction.root", "/".join(min_cfg.xmlFile.split('/')[:-1]))
         pass
@@ -117,4 +124,10 @@ if __name__ == "__main__":
         raise RuntimeError, "Please call either status or kill, not both"
     if options.kill and options.test:
         raise RuntimeError, "Please call either kill or test, not both"
-    runMC(options.step, options.test, options.status, options.kill)
+    if options.resubmit and options.test:
+        raise RuntimeError, "Please call either resubmit or test, not both"
+    if options.resubmit and options.status:
+        raise RuntimeError, "Please call either resubmit or status, not both"
+    if options.resubmit and options.kill:
+        raise RuntimeError, "Please call either resubmit or kill, not both"
+    runMC(options.step, options.test, options.status, options.kill, options.resubmit)

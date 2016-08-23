@@ -1,8 +1,8 @@
 #!/bin/bash
-if [[ "$HOSTNAME" == *hep.ph.ic.ac.uk ]]; then
-    . /vols/grid/cms/setup.sh
-fi
+source /vols/grid/cms/setup.sh
+source /cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1602/etc/profile.d/init.sh
 
+export WORKDIR=${PWD}
 export CMSSW_LHE=${PWD}/CMSSW_7_1_21/src
 export CMSSW_GENSIM=${PWD}/CMSSW_7_1_21/src
 export CMSSW_PUMixing=${PWD}/CMSSW_8_0_3_patch2/src
