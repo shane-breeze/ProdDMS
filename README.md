@@ -98,7 +98,7 @@ ls -d -1 $LHEDIR/*.lhe > lheList
 ```
 After it finishes merging the files move it to the relevant directory
 ```bash
-export LHEFILE==$(echo $LHEDIR | sed 's/lheFiles_/cmsgrid_/g' | awk '{print $1".lhe"}')
+export LHEFILE=$(echo $LHEDIR | sed 's/lheFiles_/cmsgrid_/g' | awk '{print $1".lhe"}')
 mv out.lhe $LHEFILE
 ```
 This output LHE file is typically quite large and hence we need to transfer it 
